@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hansung Alimi</title>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/11.7.3/firebase-app-compat.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/11.7.3/firebase-auth-compat.js"></script>
+    <script defer src="/__/firebase/11.7.3/firebase-database-compat.js"></script>
+    <script defer src="/__/firebase/11.7.3/firebase-firestore-compat.js"></script>
+    <script defer src="/__/firebase/11.7.3/firebase-functions-compat.js"></script>
+    <script defer src="/__/firebase/11.7.3/firebase-messaging-compat.js"></script>
+    <script defer src="/__/firebase/11.7.3/firebase-storage-compat.js"></script>
+    <script defer src="/__/firebase/11.7.3/firebase-analytics-compat.js"></script>
+    <script defer src="/__/firebase/11.7.3/firebase-remote-config-compat.js"></script>
+    <script defer src="/__/firebase/11.7.3/firebase-performance-compat.js"></script>
+
+    <style>
+      body { font-family: sans-serif; text-align: center; margin-top: 100px; }
+      button { margin: 10px; padding: 10px 20px; font-size: 16px; }
+    </style>
+  </head>
+  <body>
+    <h1>Hansung Alimi 🔔</h1>
+    <form id="loginForm">
+    <input type="text" id="userId" placeholder="한성대 ID" required><br>
+    <input type="password" id="userPw" placeholder="비밀번호" required><br>
+    <button type="submit">저장하기</button>
+  </form>
+  <p id="status"></p>
+
+    <script>
+      //  Firebase 설정 정보 (firebase console에서 복사)
+      const firebaseConfig = {
+        apiKey: "AIzaSyDaL6S3Ta0MUUAWbHxCzx41gy3ZxvS4CMg",
+       authDomain: "hansungalimi-198f9.firebaseapp.com",
+       projectId: "hansungalimi-198f9",
+       storageBucket: "hansungalimi-198f9.firebasestorage.app",
+       messagingSenderId: "703728799662",
+       appId: "1:703728799662:web:48407a51a050364849423f"
+      };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const loginForm = document.getElementById("loginForm");
+    const statusEl = document.getElementById("status");
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const idValue = document.getElementById("userId").value;
+      const pwValue = document.getElementById("userPw").value;
+
+      const userId = "user123";  // 여기는 실제 로그인한 사용자 ID로 바꿀 수 있음
+
+      try {
+        await setDoc(doc(db, "loginInfo", userId), {
+          id: idValue,
+          pw: pwValue
+        });
+        statusEl.textContent = "성공적으로 저장됐습니다! ✅";
+      } catch (error) {
+        console.error("오류 발생:", error);
+        statusEl.textContent = "저장 실패 ❌";
+      }
+    });
+    </script>
+  </body>
+</html>
